@@ -1,0 +1,25 @@
+name: uranai-app
+
+services:
+  backend:
+    build: ./SSS/backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./SSS/backend:/app
+    # --- ここを追加 ---
+    env_file:
+      - ./SSS/backend/.env
+    # ------------------
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    stdin_open: true
+    tty: true
+    depends_on:
+      - backend
